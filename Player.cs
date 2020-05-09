@@ -1,6 +1,5 @@
 ﻿﻿﻿using System;
 using System.Collections.Specialized;
-using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,7 +12,6 @@ namespace Asteroids
         public int Score { get; private set; }
         public int CountLife { get; private set; }
         
-        public double Center
         public bool IsDead { get; private set; } 
                 
         
@@ -53,7 +51,6 @@ namespace Asteroids
             Position = new Point (Position.X +dx, Position.Y + dy);
         }
         
-
         public void RemoveLife()
         {
             if (CountLife == 0)
