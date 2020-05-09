@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>func_rocket</RootNamespace>
-    <AssemblyName>func-rocket</AssemblyName>
+    <AssemblyName>Game</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -49,8 +49,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Asteroid.cs" />
+    <Compile Include="Asteroid_Tests.cs" />
+    <Compile Include="Boss.cs" />
+    <Compile Include="Boss_Tests.cs" />
+    <Compile Include="Bullet.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Player_Tests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UFO.cs" />
+    <Compile Include="UFO_Tests.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
