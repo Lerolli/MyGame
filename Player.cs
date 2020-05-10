@@ -3,15 +3,15 @@ using System.Collections.Specialized;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+  using NUnit.Framework;
 
-namespace Asteroids
+  namespace Asteroids
 {
     class Player
     {
         public Point Position { get; private set; }
         public int Score { get; private set; }
         public int CountLife { get; private set; }
-        
         public bool IsDead { get; private set; } 
                 
         
@@ -20,12 +20,12 @@ namespace Asteroids
             Position = position;
             CountLife = countLife;
             Score = score;
-            IsDead = false;
+            IsDead = false || countLife == 0;
         }
 
         public void Shot()
         {
-            var bullet = new Bullet(Position); 
+            var bullet = new Bullet(Position, 10, 1); 
         }
 
         public void Move(Keys key)
@@ -60,6 +60,12 @@ namespace Asteroids
                 IsDead = true;
         }
 
-        public void AddCountScore(int count) => Score += count;
+        public void AddCountScore(int count)
+        {
+            if (count > 0)
+                Score += count;
+            else
+                Console.WriteLine("Нельзя добавлять отрицательные очки или 0");
+        } 
     }
 }
