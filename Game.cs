@@ -10,24 +10,13 @@ namespace Asteroids
 {
     public class Game
     {
+        public Form form = new Form() {Size =  new Size(1920, 1080)}; 
+        
         public Dictionary<int, string> ScoreTable;
 
         public void StartGame()
         {
-            //var form = new Form();
-            var map = new Map(300, 200);
-            var player = new Player(new Point(map.Height/2, map.Weight/2),3, 0);
-            
-            while (player.CountLife != 0)
-            {
-                var asteroid = new Asteroid();
-                Thread.Sleep(30000);
-                var boss = new Boss(10, 1, new Point(map.Height / 4, map.Weight/ 2), 100);
-
-            }
-
-            var name = Console.ReadLine();
-            AddScoreInScoreTable(player.Score, name);
+            form.Size = new Size(400, 400);
         }
 
         public void AddScoreInScoreTable(int score, string name)

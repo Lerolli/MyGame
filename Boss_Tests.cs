@@ -12,7 +12,7 @@ namespace Asteroids
         [Test]  
         public void RemoveLife()
         {
-            var boss = new Boss(1, 10, new Point(0, 0),100);
+            var boss = new Boss(new Point(0, 0),1, 10,100);
             boss.RemoveLife();
             Assert.AreEqual(0,boss.CountLife);
         }
@@ -20,7 +20,7 @@ namespace Asteroids
         [Test]  
         public void CheckIsDead()
         {
-            var boss = new Boss(1, 10, new Point(0, 0),100);
+            var boss = new Boss(new Point(0, 0),1, 10,100);
             Assert.AreEqual(false, boss.IsDead);
             boss.RemoveLife();
             Assert.AreEqual(true,boss.IsDead);
@@ -29,7 +29,7 @@ namespace Asteroids
         [Test]  
         public void ReturnScoreDeadBoss()
         {
-            var boss = new Boss(1, 10, new Point(0, 0),100);
+            var boss = new Boss(new Point(0, 0), 1, 10,100);
             boss.RemoveLife();
             Assert.AreEqual(100,boss.ReturnScore());
         }
@@ -37,7 +37,7 @@ namespace Asteroids
         [Test]
         public void ReturnScoreNotDeadBoss()
         {
-            var boss = new Boss(1, 10, new Point(0, 0),100);
+            var boss = new Boss(new Point(0, 0), 1, 10,100);
             Assert.AreEqual(0,boss.ReturnScore());
         }
     }
