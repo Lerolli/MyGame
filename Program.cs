@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Asteroids;
 
 namespace func_rocket
 {
@@ -16,8 +17,7 @@ namespace func_rocket
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			var form = new Form();
-			Application.Run(form);
+			Application.Run(new MainForm());
 		}
 	}
 }

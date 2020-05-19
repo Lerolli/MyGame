@@ -3,16 +3,21 @@ using System.Collections.Specialized;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+  using NUnit.Framework;
 
-namespace Asteroids
+  namespace Asteroids
 {
-    class Player
+    public class Player
     {
-        public Point Position { get; private set; }
+        public Point Position;
         public int Score { get; private set; }
         public int CountLife { get; private set; }
+        public bool IsDead { get; private set; }
+        public Image Image { get; }
+        public int Size { get; }
+        public double Direction = Math.PI / 2;
+        public bool shoot;
         
-        public bool IsDead { get; private set; } 
                 
         
         public Player(Point position, int countLife, int score)
@@ -20,35 +25,117 @@ namespace Asteroids
             Position = position;
             CountLife = countLife;
             Score = score;
-            IsDead = false;
+            IsDead = false || countLife == 0;
+            Image = new Bitmap("D:\\Учеба\\ЯТП\\Asteroid\\images\\rocket.png");
+            Size = 50;
         }
 
-        public void Shot()
+        public void Shot(Keys key, Bullet bullet)
         {
-            var bullet = new Bullet(Position); 
+            if (key == Keys.Space)
+            {
+                bullet.Position = Position;
+            }
         }
-
-        public void Move(Keys key)
+        public void Move(Keys key, Bullet bullet)
         {
             var dx = 0;
             var dy = 0;
 
             switch (key)
             {
-                case Keys.Left:
-                    dx = -1;
+                case Keys.A:
+                    dx = -5;
+                    if (Direction != Math.PI)
+                    {
+                        Image.RotateFlip(GetDirection(Direction, Math.PI));
+                        Direction = Math.PI;
+                    }
                     break;
-                case Keys.Right:
-                    dx = 1;
+                case Keys.D:
+                    dx = 5;
+                    if (Direction != 0)
+                    {
+                        Image.RotateFlip(GetDirection(Direction, 0));
+                        Direction = 0;
+                    }
                     break;
-                case Keys.Up:
-                    dy = -1;
+                case Keys.W:
+                    dy = -5;
+                    if (Direction != Math.PI / 2)
+                    {
+                        Image.RotateFlip(GetDirection(Direction, Math.PI / 2));
+                        Direction = Math.PI / 2;
+                    }
                     break;
-                case Keys.Down:
-                    dy = 1;
+                case Keys.S:
+                    dy = 5;
+                    if (Direction != Math.PI / 2 * 3)
+                    {
+                        Image.RotateFlip(GetDirection(Direction, Math.PI / 2 * 3));
+                        Direction = Math.PI / 2 * 3;
+                    }
                     break;
             }
-            Position = new Point (Position.X +dx, Position.Y + dy);
+            Position = new Point(Position.X + dx, Position.Y + dy);
+            bullet.Position = Position;
+        }
+
+        private RotateFlipType GetDirection(double oldDirection, double newDirection)
+        {
+            switch (oldDirection)
+            {
+                case 0:
+                    switch (newDirection)
+                    {
+                        case Math.PI / 2:
+                            return RotateFlipType.Rotate90FlipXY;
+                        case Math.PI:
+                            return RotateFlipType.Rotate180FlipXY;
+                        case Math.PI / 2 * 3:
+                            return RotateFlipType.Rotate270FlipXY;
+                    }
+
+                    break;
+                case Math.PI / 2:
+                    switch (newDirection)
+                    {
+                        case Math.PI:
+                            return RotateFlipType.Rotate90FlipXY;
+                        case Math.PI / 2 * 3:
+                            return RotateFlipType.Rotate180FlipXY;
+                        case 0:
+                            return RotateFlipType.Rotate270FlipXY;
+                    }
+
+                    break;
+                case Math.PI:
+                    switch (newDirection)
+                    {
+                        case Math.PI / 2 * 3:
+                            return RotateFlipType.Rotate90FlipXY;
+                        case 0:
+                            return RotateFlipType.Rotate180FlipXY;
+                        case Math.PI / 2:
+                            return RotateFlipType.Rotate270FlipXY;
+                    }
+
+                    break;
+                case Math.PI / 2 * 3:
+                    switch (newDirection)
+                    {
+                        case 0:
+                            return RotateFlipType.Rotate90FlipXY;
+                        case Math.PI / 2:
+                            return RotateFlipType.Rotate180FlipXY;
+                        case Math.PI:
+                            return RotateFlipType.Rotate270FlipXY;
+                    }
+
+                    break;
+            }
+
+            return RotateFlipType.RotateNoneFlipNone;
         }
         
         public void RemoveLife()
@@ -60,6 +147,12 @@ namespace Asteroids
                 IsDead = true;
         }
 
-        public void AddCountScore(int count) => Score += count;
+        public void AddCountScore(int count)
+        {
+            if (count > 0)
+                Score += count;
+            else
+                Console.WriteLine("Нельзя добавлять отрицательные очки или 0");
+        } 
     }
 }

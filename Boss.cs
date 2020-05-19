@@ -1,35 +1,51 @@
-﻿﻿﻿using System;
- using System.Drawing;
+﻿using System;
+using System.Drawing;
 
- namespace Asteroids
+namespace func_rocket
 {
     public class Boss
     {
-        public int Hp;
-        public int BulletDamage;
         public Point Position;
-
-        public bool IsDead = false;
-
-        public Boss(int hp, int bulletDamage, Point position, bool isDead)
+        public int CountLife;
+        private int CountScore;
+        public bool IsDead;
+        public readonly Image Image;
+        private Point startPosition;
+        private bool isRight = true;
+        private double Direction;
+        public Boss(Point position, int countLife, int bulletDamage, int countScore)
         {
-            Hp = hp;
-            BulletDamage = bulletDamage;
+            startPosition = position;
             Position = position;
-            IsDead = isDead;
+            CountScore = countScore;
+            CountLife = countLife;
+            IsDead = false || CountLife == 0;
+            Image = new Bitmap("D:\\Учеба\\ЯТП\\Asteroid\\images\\boss.jpg");
         }
-
-        public void DoDamage()
+        public void Move()
         {
-            if (Hp == 0)
+            if (Position.X <= startPosition.X + 50 && isRight)
+                Position = new Point(Position.X + 1, Position.Y);
+            else
+            {
+                Position = new Point(Position.X - 1, Position.Y);
+                isRight = false;
+            }
+
+            if (Position.X <= startPosition.X - 50)
+                isRight = true;
+        }
+        public  int ReturnScore() => IsDead ? CountScore : 0;
+
+        public void RemoveLife()
+        {
+            if (CountLife == 0)
                 throw new Exception("У босса нет здоровья");
-            Hp--;
-            if (Hp == 0)
+            CountLife--;
+            if (CountLife == 0)
             {
                 IsDead = true;
             }
         }
-        
-        
     }
 }
